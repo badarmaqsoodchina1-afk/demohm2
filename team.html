@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team — H. M. S. Badar</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <nav class="site-nav" id="site-nav"></nav>
+
+  <main class="page-wrapper">
+    <div class="container">
+
+      <div class="card" id="collaborators-card"></div>
+      <div class="card" id="students-card"></div>
+      <div class="card" id="openings-card"></div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="data/profile.js"></script>
+  <script src="assets/js/components.js"></script>
+
+  <script>
+    renderNav("team.html");
+    renderFooter();
+
+    /**
+     * HOW TO ADD A COLLABORATOR:
+     * Copy one entry in COLLABORATORS and fill in the fields.
+     *
+     * {
+     *   name: "Prof. Full Name",
+     *   role: "Professor of XYZ",
+     *   org: "University Name, Country",
+     *   url: "https://their-homepage.com",
+     *   coauthored: 3,    // number of co-authored papers
+     * }
+     */
+    const COLLABORATORS = [
+      {
+        name: "Prof. Salman Qadri",
+        role: "Director/Dean, Institute of Computing",
+        org: "MNS University of Agriculture, Multan, Pakistan",
+        url: "",
+        coauthored: 2,
+      },
+      {
+        name: "Prof. Ali Kashif Bashir",
+        role: "Professor of Security, Privacy, and Data Analytics",
+        org: "Manchester Metropolitan University, UK",
+        url: "https://www.mmu.ac.uk/staff/profile/professor-ali-kashif-bashir",
+        coauthored: 2,
+      },
+      {
+        name: "Dr. Khalid Mahmood",
+        role: "Associate Professor",
+        org: "National Yunlin University of Science and Technology, Taiwan",
+        url: "",
+        coauthored: 8,
+      },
+      {
+        name: "Prof. Chongsheng Zhang",
+        role: "Professor",
+        org: "Henan University, China",
+        url: "",
+        coauthored: 5,
+      },
+      {
+        name: "Dr. Gaojuan Fan",
+        role: "Associate Professor",
+        org: "Henan University, China",
+        url: "",
+        coauthored: 6,
+      },
+      {
+        name: "Prof. Mohammad S. Obaidat",
+        role: "Professor",
+        org: "University of Jordan",
+        url: "",
+        coauthored: 3,
+      },
+      {
+        name: "Prof. Ashok Kumar Das",
+        role: "Professor",
+        org: "IIIT Hyderabad, India",
+        url: "",
+        coauthored: 3,
+      },
+      {
+        name: "Dr. Nadeem Iqbal Kajla",
+        role: "Assistant Professor",
+        org: "MNS University of Agriculture, Multan, Pakistan",
+        url: "",
+        coauthored: 7,
+      },
+    ];
+
+    document.getElementById("collaborators-card").innerHTML = `
+      <h2 class="section-title">Research Collaborators</h2>
+      <div class="research-grid">
+        ${COLLABORATORS.map(c => `
+          <div class="research-item">
+            <div class="research-title" style="font-size:.95rem;">
+              ${c.url ? `<a href="${c.url}" target="_blank">${c.name}</a>` : c.name}
+            </div>
+            <div class="research-desc" style="margin:4px 0;">${c.role}</div>
+            <div style="font-size:.82rem; color:var(--primary);">${c.org}</div>
+            <div style="font-size:.8rem; color:var(--text-muted); margin-top:6px;">
+              ${c.coauthored} co-authored paper${c.coauthored !== 1 ? "s" : ""}
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+
+    /**
+     * HOW TO ADD A STUDENT:
+     * Copy one entry in STUDENTS and fill in the fields.
+     */
+    const STUDENTS = [
+      {
+        name: "Muhammad Ilyas Shahid",
+        level: "Ph.D. (co-supervised)",
+        topic: "Robust Federated Learning under Adversarial Conditions",
+        status: "active",
+        year: 2024,
+      },
+      // Add more students here
+    ];
+
+    document.getElementById("students-card").innerHTML = `
+      <h2 class="section-title">Students</h2>
+      ${STUDENTS.length > 0 ? `
+        <div class="timeline">
+          ${STUDENTS.map(s => `
+            <div class="timeline-item ${s.status === 'active' ? 'current' : ''}">
+              <div class="timeline-period">${s.year}${s.status === 'active' ? ' – Present' : ''}</div>
+              <div class="timeline-body">
+                <div class="timeline-title">${s.name}</div>
+                <div class="timeline-org">${s.level}</div>
+                <div class="timeline-detail">${s.topic}</div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      ` : `<p style="color:var(--text-muted); font-size:.9rem;">Student list coming soon.</p>`}
+      <div style="margin-top:16px;">
+        <div class="metrics-row" style="border-radius:8px; max-width:480px;">
+          <div class="metric-item"><span class="metric-value">2</span><span class="metric-label">Ph.D. (co-sup.)</span></div>
+          <div class="metric-item"><span class="metric-value">5+</span><span class="metric-label">M.S. Theses</span></div>
+          <div class="metric-item"><span class="metric-value">50+</span><span class="metric-label">B.S. Projects</span></div>
+        </div>
+      </div>
+    `;
+
+    // ── Open positions ─────────────────────────────────────────────────────────
+    document.getElementById("openings-card").innerHTML = `
+      <h2 class="section-title">Open Positions</h2>
+      <div style="padding:16px; border:1px dashed var(--border); border-radius:8px; font-size:.9rem; color:var(--text-muted);">
+        <p style="margin-bottom:8px;">
+          I am open to collaborating with motivated <strong>Ph.D. and M.S. students</strong>
+          working on cybersecurity, trustworthy AI, federated learning, or LLM-based security analysis.
+        </p>
+        <p>
+          If you are interested, please email me at
+          <a href="mailto:${PROFILE.email}">${PROFILE.email}</a>
+          with your CV and a brief description of your research interests.
+        </p>
+      </div>
+    `;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — H. M. S. Badar</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <nav class="site-nav" id="site-nav"></nav>
+
+  <main class="page-wrapper">
+    <div class="container">
+
+      <div class="card" id="review-card"></div>
+      <div class="card" id="teaching-card"></div>
+      <div class="card" id="supervision-card"></div>
+      <div class="card" id="outreach-card"></div>
+      <div class="card" id="training-card"></div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="data/profile.js"></script>
+  <script src="data/awards.js"></script>
+  <script src="assets/js/components.js"></script>
+
+  <script>
+    renderNav("services.html");
+    renderFooter();
+
+    // ── Peer Review ───────────────────────────────────────────────────────────
+    document.getElementById("review-card").innerHTML = `
+      <h2 class="section-title">Peer Review</h2>
+      <p style="margin-bottom:14px; font-size:.9rem; color:var(--text-muted);">
+        Serving as reviewer for the following journals and conferences:
+      </p>
+      <ul class="service-list">
+        ${SERVICES.peerReview.map(j => `<li>${j}</li>`).join("")}
+      </ul>
+    `;
+
+    // ── Teaching ──────────────────────────────────────────────────────────────
+    // HOW TO ADD A COURSE: add to the COURSES array below
+    const COURSES = [
+      { code: "CYB101", title: "Fundamentals of Cybersecurity" },
+      { code: "CYB201", title: "Network Security" },
+      { code: "CYB301", title: "Cybersecurity Risk Management" },
+      { code: "CYB402", title: "Privacy-Preserving Computing" },
+      { code: "CS201", title: "Introduction to Artificial Intelligence" },
+      { code: "CS401", title: "Advanced Machine Learning" },
+      { code: "DS201", title: "Data Science" },
+      { code: "DS401", title: "Advanced Data Analytics" },
+      { code: "CS302", title: "Cloud Computing" },
+      { code: "CS101", title: "Programming Fundamentals (Python/Java/C#)" },
+      { code: "CS202", title: "Database Systems" },
+      { code: "CS203", title: "Operating Systems" },
+      { code: "CS204", title: "Computer Networks" },
+      { code: "CS305", title: "Web and Mobile Application Development" },
+      { code: "CS303", title: "Theory of Computation" },
+      { code: "RES101", title: "Research Methodology" },
+    ];
+
+    document.getElementById("teaching-card").innerHTML = `
+      <h2 class="section-title">Teaching Experience</h2>
+      <p style="margin-bottom:14px; font-size:.9rem; color:var(--text-muted);">
+        Research-led and project-based instruction integrating real-world datasets,
+        security case studies, and outcome-based education (OBE) frameworks.
+      </p>
+      <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap:8px;">
+        ${COURSES.map(c => `
+          <div style="padding:8px 12px; border:1px solid var(--border); border-radius:6px; font-size:.88rem;">
+            <strong style="color:var(--primary);">${c.code}</strong> — ${c.title}
+          </div>
+        `).join("")}
+      </div>
+    `;
+
+    // ── Supervision ────────────────────────────────────────────────────────────
+    document.getElementById("supervision-card").innerHTML = `
+      <h2 class="section-title">Graduate Supervision</h2>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:8px;">
+        <div class="metric-item" style="border:1px solid var(--border); border-radius:8px;">
+          <span class="metric-value" style="font-size:2rem;">2</span>
+          <span class="metric-label">Ph.D. Co-supervised</span>
+        </div>
+        <div class="metric-item" style="border:1px solid var(--border); border-radius:8px;">
+          <span class="metric-value" style="font-size:2rem;">5+</span>
+          <span class="metric-label">M.S. Theses</span>
+        </div>
+        <div class="metric-item" style="border:1px solid var(--border); border-radius:8px;">
+          <span class="metric-value" style="font-size:2rem;">50+</span>
+          <span class="metric-label">B.S. Capstone Projects</span>
+        </div>
+      </div>
+    `;
+
+    // ── Academic Outreach ─────────────────────────────────────────────────────
+    document.getElementById("outreach-card").innerHTML = `
+      <h2 class="section-title">Academic Service & Outreach</h2>
+      <ul class="service-list">
+        ${[...SERVICES.committees, ...SERVICES.outreach].map(s => `<li>${s}</li>`).join("")}
+      </ul>
+    `;
+
+    // ── Professional Training ─────────────────────────────────────────────────
+    const TRAINING = [
+      "Information security management training (ISO/IEC 27001/27002)",
+      "Workshops on cybersecurity frameworks, secure software engineering, and threat modelling",
+      "OBE and curriculum design training, including assessment and continuous quality improvement",
+      "Professional development courses in university teaching, active learning, and fair assessment",
+      "Training in research ethics, data protection, and responsible conduct of research",
+    ];
+
+    document.getElementById("training-card").innerHTML = `
+      <h2 class="section-title">Professional Development & Training</h2>
+      <ul class="service-list">
+        ${TRAINING.map(t => `<li>${t}</li>`).join("")}
+      </ul>
+    `;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Awards — H. M. S. Badar</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <nav class="site-nav" id="site-nav"></nav>
+
+  <main class="page-wrapper">
+    <div class="container">
+
+      <div class="card" id="grants-card"></div>
+      <div class="card" id="awards-card"></div>
+      <div class="card" id="education-card"></div>
+      <div class="card" id="positions-card"></div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="data/profile.js"></script>
+  <script src="data/awards.js"></script>
+  <script src="assets/js/components.js"></script>
+
+  <script>
+    renderNav("awards.html");
+    renderFooter();
+
+    // ── Grants ───────────────────────────────────────────────────────────────
+    const grants = AWARDS.filter(a => a.type === "grant");
+    document.getElementById("grants-card").innerHTML = `
+      <h2 class="section-title">Research Grants & Funding</h2>
+      <div class="award-list">
+        ${grants.map(a => `
+          <div class="award-item">
+            <div class="award-year">${a.year}</div>
+            <div class="award-body">
+              <div class="award-title">
+                ${a.title}
+                <span class="award-badge grant">Grant</span>
+              </div>
+              <div class="award-org">${a.org}</div>
+              ${a.amount ? `<div class="award-amount">${a.amount}</div>` : ""}
+              ${a.description ? `<div class="award-desc">${a.description}</div>` : ""}
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+
+    // ── Honours ───────────────────────────────────────────────────────────────
+    const honours = AWARDS.filter(a => a.type === "award");
+    document.getElementById("awards-card").innerHTML = `
+      <h2 class="section-title">Honours & Awards</h2>
+      <div class="award-list">
+        ${honours.map(a => `
+          <div class="award-item">
+            <div class="award-year">${a.year}</div>
+            <div class="award-body">
+              <div class="award-title">
+                ${a.title}
+                <span class="award-badge award">Award</span>
+              </div>
+              <div class="award-org">${a.org}</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+
+    // ── Education ─────────────────────────────────────────────────────────────
+    document.getElementById("education-card").innerHTML = `
+      <h2 class="section-title">Education</h2>
+      <div class="timeline">
+        ${EDUCATION.map(e => `
+          <div class="timeline-item">
+            <div class="timeline-period">${e.year || ""}</div>
+            <div class="timeline-body">
+              <div class="timeline-title">${e.degree}</div>
+              <div class="timeline-org">${e.institution}</div>
+              ${e.thesis ? `<div class="timeline-detail">Thesis: ${e.thesis}</div>` : ""}
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+
+    // ── Positions ─────────────────────────────────────────────────────────────
+    document.getElementById("positions-card").innerHTML = `
+      <h2 class="section-title">Academic Appointments</h2>
+      <div class="timeline">
+        ${POSITIONS.map(p => `
+          <div class="timeline-item ${p.current ? "current" : ""}">
+            <div class="timeline-period">${p.period}</div>
+            <div class="timeline-body">
+              <div class="timeline-title">${p.title}</div>
+              <div class="timeline-org">${p.org}</div>
+              ${p.dept ? `<div class="timeline-detail">${p.dept}</div>` : ""}
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  </script>
+
+</body>
+</html>

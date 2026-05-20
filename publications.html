@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Publications — H. M. S. Badar</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <nav class="site-nav" id="site-nav"></nav>
+
+  <main class="page-wrapper">
+    <div class="container">
+
+      <!-- Stats card -->
+      <div class="card" id="pub-stats"></div>
+
+      <!-- Filter bar -->
+      <div class="filter-bar" id="filter-bar"></div>
+
+      <!-- Under review -->
+      <div class="card" id="under-review"></div>
+
+      <!-- Publication list (grouped by year) -->
+      <div class="card" id="pub-list"></div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="data/profile.js"></script>
+  <script src="data/publications.js"></script>
+  <script src="assets/js/components.js"></script>
+
+  <script>
+    renderNav("publications.html");
+    renderFooter();
+
+    // ── Stats ────────────────────────────────────────────────────────────────
+    const statsEl = document.getElementById("pub-stats");
+    const q1Count = PUBLICATIONS.filter(p => p.rank === "Q1").length;
+    const firstAuthor = PUBLICATIONS.filter(p => p.role === "First Author").length;
+    statsEl.innerHTML = `
+      <h2 class="section-title">Publications</h2>
+      <div class="metrics-row" style="margin-top:16px; border-radius:8px;">
+        <div class="metric-item"><span class="metric-value">${PUBLICATIONS.length}</span><span class="metric-label">Total</span></div>
+        <div class="metric-item"><span class="metric-value">${q1Count}</span><span class="metric-label">Q1 Journals</span></div>
+        <div class="metric-item"><span class="metric-value">${firstAuthor}</span><span class="metric-label">First Author</span></div>
+        <div class="metric-item"><span class="metric-value">${PROFILE.metrics[1].value}</span><span class="metric-label">Citations</span></div>
+      </div>
+    `;
+
+    // ── Manuscripts under review ─────────────────────────────────────────────
+    const reviewEl = document.getElementById("under-review");
+    if (UNDER_REVIEW.length > 0) {
+      reviewEl.innerHTML = `
+        <div class="section-title">Manuscripts Under Review</div>
+        ${UNDER_REVIEW.map(r => `
+          <div class="review-item">
+            <div class="review-title">${r.title}<span class="review-status">${r.status}</span></div>
+            <div class="review-venue">${r.venue}</div>
+          </div>
+        `).join("")}
+      `;
+    } else {
+      reviewEl.style.display = "none";
+    }
+
+    // ── Filter bar ───────────────────────────────────────────────────────────
+    const allTags = ["All", "First Author", "Q1", ...new Set(PUBLICATIONS.flatMap(p => p.tags))].slice(0, 12);
+    let activeFilter = "All";
+
+    const filterEl = document.getElementById("filter-bar");
+    function renderFilters() {
+      filterEl.innerHTML = allTags.map(t =>
+        `<button class="filter-btn ${t === activeFilter ? "active" : ""}" data-tag="${t}">${t}</button>`
+      ).join("");
+      filterEl.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          activeFilter = btn.dataset.tag;
+          renderFilters();
+          renderPubs();
+        });
+      });
+    }
+    renderFilters();
+
+    // ── Publications grouped by year ─────────────────────────────────────────
+    function renderPubs() {
+      const filtered = PUBLICATIONS.filter(p => {
+        if (activeFilter === "All") return true;
+        if (activeFilter === "First Author") return p.role === "First Author";
+        if (activeFilter === "Q1") return p.rank === "Q1";
+        return p.tags.includes(activeFilter);
+      });
+
+      const years = [...new Set(filtered.map(p => p.year))].sort((a, b) => b - a);
+
+      const pubEl = document.getElementById("pub-list");
+      if (filtered.length === 0) {
+        pubEl.innerHTML = `<p style="color:var(--text-muted); font-size:.9rem;">No publications match this filter.</p>`;
+        return;
+      }
+
+      pubEl.innerHTML = years.map(year => {
+        const pubs = filtered.filter(p => p.year === year);
+        return `
+          <div class="year-group">
+            <div class="year-label">${year}</div>
+            <div class="pub-list">${pubs.map(p => pubItemHtml(p)).join("")}</div>
+          </div>
+        `;
+      }).join("");
+    }
+    renderPubs();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research — H. M. S. Badar</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <nav class="site-nav" id="site-nav"></nav>
+
+  <main class="page-wrapper">
+    <div class="container">
+
+      <!-- Research Areas -->
+      <div class="card" id="research-areas"></div>
+
+      <!-- Current Projects -->
+      <div class="card" id="research-projects"></div>
+
+      <!-- Keywords cloud -->
+      <div class="card" id="research-keywords"></div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="data/profile.js"></script>
+  <script src="data/publications.js"></script>
+  <script src="data/research.js"></script>
+  <script src="assets/js/components.js"></script>
+
+  <script>
+    renderNav("research.html");
+    renderFooter();
+
+    // ── Research areas grid ──────────────────────────────────────────────────
+    const areasEl = document.getElementById("research-areas");
+    areasEl.innerHTML = `
+      <h2 class="section-title">Research Areas</h2>
+      <div class="research-grid">
+        ${RESEARCH_AREAS.map(area => `
+          <div class="research-item">
+            <div class="research-icon">${area.icon}</div>
+            <div class="research-title">${area.title}</div>
+            <div class="research-desc">${area.description}</div>
+            <div class="tags" style="margin-top:12px;">
+              ${area.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+
+    // ── Research projects ────────────────────────────────────────────────────
+    const projEl = document.getElementById("research-projects");
+    projEl.innerHTML = `
+      <h2 class="section-title">Research Projects & Grants</h2>
+      <div class="timeline">
+        ${RESEARCH_PROJECTS.map(p => `
+          <div class="timeline-item ${p.status === 'active' ? 'current' : ''}">
+            <div class="timeline-period">${p.period}</div>
+            <div class="timeline-body">
+              <div class="timeline-title">${p.title}</div>
+              <div class="timeline-org">${p.role} &nbsp;·&nbsp; ${p.funding}</div>
+              <div class="timeline-detail">${p.description}</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+
+    // ── All keywords across research areas ───────────────────────────────────
+    const allKeywords = [...new Set(RESEARCH_AREAS.flatMap(a => a.tags))];
+    const kwEl = document.getElementById("research-keywords");
+    kwEl.innerHTML = `
+      <h2 class="section-title">Research Keywords</h2>
+      <div class="tags">
+        ${allKeywords.map(k => `<span class="tag">${k}</span>`).join("")}
+      </div>
+    `;
+  </script>
+
+</body>
+</html>

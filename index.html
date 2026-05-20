@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hafiz Muhammad Sanaullah Badar — Academic Homepage</title>
+  <meta name="description" content="Postdoctoral Research Fellow in Cybersecurity, Trustworthy AI, and Systems Security at Henan University, China." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- Navigation (rendered by components.js) -->
+  <nav class="site-nav" id="site-nav"></nav>
+
+  <main class="page-wrapper">
+    <div class="container">
+
+      <!-- Profile card + metrics -->
+      <div id="profile-container"></div>
+
+      <!-- Bio -->
+      <div id="bio-container"></div>
+
+      <!-- Recent Highlights -->
+      <div class="card" id="highlights-container"></div>
+
+      <!-- News / Updates -->
+      <div class="card" id="news-container"></div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <!-- Data files (order matters) -->
+  <script src="data/profile.js"></script>
+  <script src="data/publications.js"></script>
+  <script src="data/research.js"></script>
+  <script src="data/awards.js"></script>
+
+  <!-- Shared components -->
+  <script src="assets/js/components.js"></script>
+
+  <!-- Page init -->
+  <script>
+    // Render navigation (pass current page filename)
+    renderNav("index.html");
+
+    // Render profile and bio
+    renderProfile("profile-container");
+    renderBio("bio-container");
+
+    // ── Highlighted publications ─────────────────────────────────────────────
+    const highlights = PUBLICATIONS.filter(p => p.highlight).slice(0, 5);
+    const highlightsEl = document.getElementById("highlights-container");
+    highlightsEl.innerHTML = `
+      <div class="section-title">Selected Publications</div>
+      <div class="pub-list">
+        ${highlights.map(p => pubItemHtml(p)).join("")}
+      </div>
+      <p style="margin-top:16px; font-size:0.9rem;">
+        <a href="publications.html">→ View all ${PUBLICATIONS.length} publications</a>
+      </p>
+    `;
+
+    // ── News section ─────────────────────────────────────────────────────────
+    // HOW TO ADD NEWS: add entries to the NEWS array below.
+    // { date: "May 2026", text: "Paper accepted at IEEE TSG." }
+    const NEWS = [
+      { date: "May 2026",  text: "Paper \"Robust Federated Learning under Data Heterogeneity and Adversarial Clients\" accepted in <em>IEEE Internet of Things Journal</em>." },
+      { date: "Apr 2026",  text: "New paper on WSN coverage optimization published in <em>IEEE Internet of Things Journal</em>." },
+      { date: "Mar 2026",  text: "Health-FedNet paper published in <em>Scientific Reports</em> — federated learning for chronic disease prediction with differential privacy." },
+      { date: "Feb 2026",  text: "ATTA-FL-Lite and Edge-Optimized Transformer papers published in <em>IEEE Internet of Things Journal</em>." },
+      { date: "Jan 2026",  text: "Started Postdoctoral Research Fellowship at Henan University, China (Nov 2024)." },
+      { date: "2025",      text: "Q-BLAISE published in <em>IEEE Transactions on Consumer Electronics</em> — quantum-resilient blockchain for smart grid IoT." },
+    ];
+
+    const newsEl = document.getElementById("news-container");
+    const newsRows = NEWS.map(n =>
+      `<li style="padding:6px 0; border-bottom:1px solid #f0f0f0; font-size:0.9rem;">
+         <span style="color:var(--primary); font-weight:600; min-width:90px; display:inline-block;">${n.date}</span>
+         ${n.text}
+       </li>`
+    ).join("");
+    newsEl.innerHTML = `
+      <div class="section-title">News</div>
+      <ul style="list-style:none; padding:0;">${newsRows}</ul>
+    `;
+  </script>
+
+</body>
+</html>

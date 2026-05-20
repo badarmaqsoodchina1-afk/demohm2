@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Software — H. M. S. Badar</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <nav class="site-nav" id="site-nav"></nav>
+
+  <main class="page-wrapper">
+    <div class="container">
+
+      <div class="card" id="software-card"></div>
+      <div class="card" id="tools-card"></div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="data/profile.js"></script>
+  <script src="assets/js/components.js"></script>
+
+  <script>
+    renderNav("software.html");
+    renderFooter();
+
+    /**
+     * HOW TO ADD SOFTWARE / CODE RELEASES:
+     * Copy one entry in SOFTWARE array, fill in the fields, and paste.
+     *
+     * {
+     *   title: "My Tool Name",
+     *   desc: "Brief description of what the tool does.",
+     *   paper: "pub-2025-my-paper",   // matching id from publications.js
+     *   github: "https://github.com/USERNAME/repo",
+     *   demo: "",                      // live demo URL if any
+     *   tags: ["Python", "PyTorch"],
+     *   year: 2025,
+     * }
+     */
+    const SOFTWARE = [
+      {
+        title: "ATTA-FL-Lite",
+        desc: "Lightweight Byzantine-robust federated learning framework designed for resource-constrained Medical IoT devices. Implements secure aggregation with low computational overhead.",
+        paper: "pub-2025-atta-fl-lite",
+        github: "#",   // replace with your GitHub repo URL
+        demo: "",
+        tags: ["Python", "Flower", "PyTorch", "Federated Learning"],
+        year: 2025,
+      },
+      {
+        title: "Q-BLAISE Protocol Implementation",
+        desc: "Reference implementation of the Q-BLAISE quantum-resilient blockchain and AI-enhanced security protocol for smart grid IoT environments.",
+        paper: "pub-2025-qblaise",
+        github: "#",
+        demo: "",
+        tags: ["Python", "Blockchain", "Quantum Security"],
+        year: 2025,
+      },
+      {
+        title: "Edge Road Damage Detector",
+        desc: "Edge-optimised lightweight and transformer backbone models for real-time road damage detection in IIoT systems. Supports multiple backbone architectures.",
+        paper: "pub-2025-road-damage-iiot",
+        github: "#",
+        demo: "",
+        tags: ["Python", "PyTorch", "YOLO", "Transformers", "IIoT"],
+        year: 2025,
+      },
+    ];
+
+    const swEl = document.getElementById("software-card");
+    swEl.innerHTML = `
+      <h2 class="section-title">Code & Software Releases</h2>
+      <div class="research-grid">
+        ${SOFTWARE.map(sw => `
+          <div class="research-item">
+            <div class="research-title" style="font-size:1.05rem;">💻 ${sw.title}
+              <span style="font-size:.75rem; color:var(--text-muted); font-weight:400;"> · ${sw.year}</span>
+            </div>
+            <div class="research-desc" style="margin:8px 0;">${sw.desc}</div>
+            <div class="tags" style="margin-bottom:12px;">
+              ${sw.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              ${sw.github && sw.github !== "#" ? `<a class="pub-link" href="${sw.github}" target="_blank">GitHub</a>` : `<span style="font-size:.8rem;color:var(--text-muted);">Code coming soon</span>`}
+              ${sw.demo ? `<a class="pub-link" href="${sw.demo}" target="_blank">Demo</a>` : ""}
+              ${sw.paper ? `<a class="pub-link" href="publications.html#${sw.paper}">Paper</a>` : ""}
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+
+    // ── Technical Skills ───────────────────────────────────────────────────────
+    const SKILL_GROUPS = [
+      {
+        group: "Programming & Data",
+        skills: ["Python (NumPy, Pandas, Scikit-learn)", "SQL (PostgreSQL, MySQL)", "Java", "C#", "MATLAB"],
+      },
+      {
+        group: "AI & Machine Learning",
+        skills: ["PyTorch", "TensorFlow", "Scikit-learn", "Transformers (HuggingFace)", "YOLO"],
+      },
+      {
+        group: "Federated & Privacy-Preserving ML",
+        skills: ["Flower", "FedML", "TensorFlow Federated", "PySyft", "SEAL", "HElib"],
+      },
+      {
+        group: "Security & Penetration Testing",
+        skills: ["Wireshark", "Nmap", "OpenVAS", "Metasploit", "Burp Suite", "OpenSSL/GPG"],
+      },
+      {
+        group: "Formal Verification",
+        skills: ["ProVerif", "Scyther", "AVISPA", "Dolev–Yao Modelling"],
+      },
+      {
+        group: "DevOps & Reproducibility",
+        skills: ["Docker", "Git/GitHub", "Jupyter", "LaTeX", "VS Code"],
+      },
+    ];
+
+    document.getElementById("tools-card").innerHTML = `
+      <h2 class="section-title">Technical Skills</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; margin-top:8px;">
+        ${SKILL_GROUPS.map(g => `
+          <div style="border:1px solid var(--border); border-radius:8px; padding:16px;">
+            <div style="font-weight:700; color:var(--primary); font-size:.9rem; margin-bottom:10px;">${g.group}</div>
+            <div class="tags">
+              ${g.skills.map(s => `<span class="tag">${s}</span>`).join("")}
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  </script>
+
+</body>
+</html>

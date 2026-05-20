@@ -1,0 +1,7 @@
+# GitHub Pages config
+# This file tells GitHub Pages to serve the site from the root folder.
+# No Jekyll theme — we use our own HTML/CSS.
+
+exclude:
+  - README.md
+  - "*.pdf"
